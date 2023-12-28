@@ -4,17 +4,17 @@ package game;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Frame extends JFrame {
 
     public Frame() {
         PongGame pong = new PongGame();
         this.add(pong);
-        this.setTitle("Pong Game");
-        this.setResizable(false);
-        this.setBackground(Color.black);
+        this.setBackground(Color.BLACK);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
+        this.setResizable(false);
         this.setVisible(true);
+        this.pack();
         this.setLocationRelativeTo(null);
     }
 
