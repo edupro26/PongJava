@@ -63,11 +63,55 @@ public class PongGame extends JPanel implements Runnable {
         }
     }
 
-    private void update() {
+    public void update() {
         // TODO
     }
 
-    private class AL extends KeyAdapter {
+    public void paint(Graphics g) {
+        // TODO
+    }
+
+    @Override
+    public void run() {
+        // Simple game loop with FPS and UPS counter
+        final double UPS = 60.0;
+        final double FPS = 60.0;
+
+        final double uTIME = 1000000000 / UPS;
+        final double fTIME = 1000000000 / FPS;
+
+        double uDelta = 0, fDelta = 0;
+        int uCounter = 0, fCounter = 0;
+        long start = System.nanoTime();
+        long timer = System.currentTimeMillis();
+        while (running) {
+            long now = System.nanoTime();
+            uDelta += (now - start);
+            fDelta += (now - start);
+            start = now;
+
+            if (uDelta >= uTIME) {
+                this.update();
+                uCounter++;
+                uDelta -= uTIME;
+            }
+            if (fDelta >= fTIME) {
+                this.repaint();
+                fCounter++;
+                fDelta -= fTIME;
+            }
+
+            if (System.currentTimeMillis() - timer == 1000) {
+                System.out.println("FPS: " + fCounter + ", UPS: " + uCounter);
+                uCounter = 0;
+                fCounter = 0;
+                timer += 1000;
+            }
+        }
+        this.stop();
+    }
+
+    public class AL extends KeyAdapter {
 
         public void keyPressed(KeyEvent e) {
             // TODO
@@ -77,18 +121,6 @@ public class PongGame extends JPanel implements Runnable {
             // TODO
         }
 
-    }
-
-    public void paint(Graphics g) {
-        // TODO
-    }
-
-    @Override
-    public void run() {
-        while (running) {
-            // TODO
-        }
-        this.stop();
     }
 
 }
