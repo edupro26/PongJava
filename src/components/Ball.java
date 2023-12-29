@@ -1,4 +1,12 @@
 package components;
 
-public class Ball {
+import java.awt.*;
+
+public class Ball extends Rectangle implements Component {
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
+
 }
