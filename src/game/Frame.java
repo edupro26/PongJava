@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class Frame extends JFrame {
 
-    public Frame() {
-        PongGame pong = new PongGame();
-        this.add(pong);
+    public Frame(String title, PongGame game) {
+        this.add(game);
+        this.setTitle(title);
         this.setBackground(Color.BLACK);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);

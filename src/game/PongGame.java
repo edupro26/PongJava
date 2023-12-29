@@ -14,32 +14,56 @@ import java.awt.event.KeyEvent;
 public class PongGame extends JPanel implements Runnable {
 
     private static final int WIDTH = 1000;
-    private static final int HEIGHT = 600;
+    private static final int HEIGHT = WIDTH * 9 / 16;
+
+    private boolean running = false;
+    private Thread gameThread;
+
+    /* Game components */
     private Ball ball;
     private Paddle paddleLeft;
     private Paddle paddleRight;
     private Score gameScore;
 
     public PongGame() {
-        this.createComponents();
+        this.frameInit();
+        this.gameInit();
+        new Frame("Pong", this);
+        this.start();
+    }
+
+    private void frameInit() {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setFocusable(true);
         this.addKeyListener(new AL());
+    }
 
-        Thread gameThread = new Thread(this);
+    private void gameInit() {
+        ball = new Ball();
+        paddleLeft = new Paddle();
+        paddleRight = new Paddle();
+        gameScore = new Score();
+    }
+
+    private synchronized void start() {
+        gameThread = new Thread(this);
         gameThread.start();
+        running = true;
     }
 
-    @Override
-    public void run() {
-        // TODO
+    private void stop() {
+        try {
+            gameThread.join();
+            if (running)
+                running = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void paint(Graphics g) {
-        // TODO
-    }
-
-    private void createComponents() {
+    private void update() {
         // TODO
     }
 
@@ -54,4 +78,17 @@ public class PongGame extends JPanel implements Runnable {
         }
 
     }
+
+    public void paint(Graphics g) {
+        // TODO
+    }
+
+    @Override
+    public void run() {
+        while (running) {
+            // TODO
+        }
+        this.stop();
+    }
+
 }
