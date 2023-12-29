@@ -1,4 +1,3 @@
-import game.Frame;
 import game.PongGame;
 
 
