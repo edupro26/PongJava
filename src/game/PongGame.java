@@ -42,8 +42,12 @@ public class PongGame extends JPanel implements Runnable {
 
     private void gameInit() {
         ball = new Ball();
-        paddleLeft = new Paddle();
-        paddleRight = new Paddle();
+
+        final int pWIDTH = 20, pHEIGHT = 100;
+        final int yPADDLE = HEIGHT/2 - pHEIGHT/2;
+        paddleLeft = new Paddle(0, yPADDLE, pWIDTH, pHEIGHT, Color.GREEN);
+        paddleRight = new Paddle(WIDTH - pWIDTH, yPADDLE, pWIDTH, pHEIGHT, Color.RED);
+
         gameScore = new Score();
     }
 
@@ -68,7 +72,15 @@ public class PongGame extends JPanel implements Runnable {
     }
 
     public void paint(Graphics g) {
-        // TODO
+        Image image = createImage(getWidth(), getHeight());
+        Graphics graphics = image.getGraphics();
+
+        paddleLeft.draw(graphics);
+        paddleRight.draw(graphics);
+        ball.draw(graphics);
+        gameScore.draw(graphics);
+
+        g.drawImage(image,0,0,this);
     }
 
     @Override
